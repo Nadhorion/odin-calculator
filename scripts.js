@@ -64,6 +64,7 @@ function numberClicked(buttonClicked) {
 }
 
 function decimalClicked() {
+    if (!(result === '')) clear();
     if (!operation) {
         if (numberA.includes(".")) return;
         numberA += (!numberA) ? "0." : ".";
@@ -92,6 +93,7 @@ function evaluate() {
     if (numberA && numberB && operation) {
         return operate(+numberA, +numberB, operation);
     }
+    return '';
 }
 
 function clear() {
@@ -99,7 +101,7 @@ function clear() {
     numberB = '';
     operation = '';
     result = '';
-    updateScreen('');
+    updateScreen('0');
 }
 
 function backspace() {
