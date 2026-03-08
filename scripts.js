@@ -62,9 +62,10 @@ function operatorClicked(buttonClicked) {
         operation = buttonClicked.id;
     } else if (numberB) {
         let currentEvaluation = evaluate();
+        let previousOperand = numberB;
         clear();
         numberA = currentEvaluation;
-        updateScreen(numberA);
+        updateScreen(previousOperand);
         operation = buttonClicked.id;
     }
 }
