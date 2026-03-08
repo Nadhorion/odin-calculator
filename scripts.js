@@ -43,7 +43,7 @@ function calculatorInteraction(event) {
         operatorClicked(buttonClicked);
     } else if (buttonClicked.id === "=") {
         result = evaluate();
-        if (!(result === '')) updateScreen(result);
+        if (isReal(result)) updateScreen(result);
     } else if (buttonClicked.id === "clear") {
         clear();
     } else if (buttonClicked.id === "backspace") {
@@ -52,7 +52,7 @@ function calculatorInteraction(event) {
 }
 
 function numberClicked(buttonClicked) {
-    if (!(result === '')) clear();
+    if (isReal(result)) clear();
     //If there is no operator saved (clicked), we are still on numberA, else: numberB.
     if (!operation) {
         numberA += buttonClicked.id;
@@ -64,36 +64,39 @@ function numberClicked(buttonClicked) {
 }
 
 function decimalClicked() {
-    if (!(result === '')) clear();
+    if (isReal(result)) clear();
     if (!operation) {
         if (numberA.includes(".")) return;
-        numberA += (!numberA) ? "0." : ".";
+        numberA += (!isReal(numberA)) ? "0." : ".";
         updateScreen(numberA);
     } else if (operation) {
         if (numberB.includes(".")) return;
-        numberB += (!numberB) ? "0." : ".";
+        numberB += (!isReal(numberB)) ? "0." : ".";
         updateScreen(numberB);
     } 
 }
-
+// Add property that returns whether numberA or NumberB have a saved number or not. number = "0" is causing issues as it returns falsy. Replace conditions with it
 function operatorClicked(buttonClicked) {
-    if (numberA && !numberB) {
+    if (isReal(result)) clear();
+    if (isReal(numberA) && !isReal(numberB)) {
         operation = buttonClicked.id;
-    } else if (numberB) {
+    } else if (isReal(numberB)) {
         let currentEvaluation = evaluate();
         let previousOperand = numberB;
         clear();
         numberA = currentEvaluation;
         updateScreen(previousOperand);
         operation = buttonClicked.id;
+    } else if (!isReal(numberA)) {
+        numberA = '0';
+        operation = buttonClicked.id;
     }
 }
 
 function evaluate() {
-    if (numberA && numberB && operation) {
+    if (isReal(numberA) && isReal(numberB) && operation) {
         return operate(+numberA, +numberB, operation);
     }
-    return '';
 }
 
 function clear() {
@@ -105,16 +108,20 @@ function clear() {
 }
 
 function backspace() {
-    if (result) return;
-    if (numberB) {
+    if (isReal(result)) return;
+    if (isReal(numberB)) {
         numberB = numberB.slice(0,-1);
         updateScreen(numberB);
         return;
-    } else if (numberA && !numberB) {
+    } else if (isReal(numberA) && !isReal(numberB)) {
         numberA = numberA.slice(0,-1);
         updateScreen(numberA);
         return;
     }
+}
+
+function isReal(value) {
+    return (value === '' || value === undefined) ? false : true;    
 }
 
 function updateScreen(value, isOperand) {
