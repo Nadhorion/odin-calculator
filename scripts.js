@@ -43,7 +43,7 @@ function calculatorInteraction(event) {
         operatorClicked(buttonClicked);
     } else if (buttonClicked.id === "=") {
         result = evaluate();
-        updateScreen(result);
+        if (result) updateScreen(result);
     } else if (buttonClicked.id === "clear") {
         clear();
     } else if (buttonClicked.id === "backspace") {
