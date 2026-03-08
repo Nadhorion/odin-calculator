@@ -34,9 +34,7 @@ function operate(a, b, operator) {
 }
 
 function calculatorInteraction(event) {
-
     let buttonClicked = event.target;
-
     if (buttonClicked.className === "number") {
         numberClicked(buttonClicked);
     } else if (buttonClicked.id === "decimal") {
@@ -65,23 +63,13 @@ function numberClicked(buttonClicked) {
 }
 
 function decimalClicked() {
-    
-
     if (!operation) {
         if (numberA.includes(".")) return;
-        if (!numberA) {
-            numberA += "0.";
-        } else {
-            numberA += ".";
-        }
+        numberA += (!numberA) ? "0." : ".";
         updateScreen(numberA);
     } else if (operation) {
         if (numberB.includes(".")) return;
-        if (!numberB) {
-            numberB += "0.";
-        } else {
-            numberB += ".";
-        }
+        numberB += (!numberB) ? "0." : ".";
         updateScreen(numberB);
     } 
 }
