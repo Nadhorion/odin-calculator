@@ -32,56 +32,73 @@ function calculatorInteraction(event) {
     let buttonClicked = event.target;
 
     if (buttonClicked.className === "number") {
-        
-        if (!operation) {
-            numberA += buttonClicked.id;
-            calculatorScreen.textContent = numberA;
-        } else if (operation) {
-            numberB += buttonClicked.id;
-            calculatorScreen.textContent = numberB;
-        }
-
+        numberClicked(buttonClicked);
     } else if (buttonClicked.className === "operator") {
-
-        if (numberA) {
-            operation = buttonClicked.id;
-        }
-
+        operatorClicked(buttonClicked);
     } else if (buttonClicked.id === "=") {
-
-        if (numberA && numberB && operation) {
-            result = operate(+numberA, +numberB, operation);
-            calculatorScreen.textContent = result;
-        }
-
+        result = evaluate();
+        updateScreen(result);
     } else if (buttonClicked.id === "clear") {
-
-        numberA = '';
-        numberB = '';
-        operation = '';
-        result = '';
-        calculatorScreen.textContent = '';
-
+        clear();
     } else if (buttonClicked.id === "backspace") {
-
-        if (result) return;
-        if (numberB) {
-            numberB = numberB.slice(0,-1);
-            calculatorScreen.textContent = numberB;
-            return;
-        } else if (numberA && !numberB) {
-            numberA = numberA.slice(0,-1);
-            calculatorScreen.textContent = numberA;
-            return;
-        }
-
+        backspace();
     }
-    
-    //add number to numberA string
-    //if target is operator, 
-
 }
 
+function numberClicked(buttonClicked) {
+    if (result) clear();
+    if (!operation) {
+        numberA += buttonClicked.id;
+        updateScreen(numberA);
+    } else if (operation) {
+        numberB += buttonClicked.id;
+        updateScreen(numberB);
+    }
+    
+}
+
+function operatorClicked(buttonClicked) {
+    if (numberA && !numberB) {
+        operation = buttonClicked.id;
+    } else if (numberB) {
+        let currentEvaluation = evaluate();
+        clear();
+        numberA = currentEvaluation;
+        updateScreen(numberA);
+        operation = buttonClicked.id;
+    }
+}
+
+function evaluate() {
+    if (numberA && numberB && operation) {
+        return operate(+numberA, +numberB, operation);
+    }
+}
+
+function clear() {
+    numberA = '';
+    numberB = '';
+    operation = '';
+    result = '';
+    updateScreen('');
+}
+
+function backspace() {
+    if (result) return;
+    if (numberB) {
+        numberB = numberB.slice(0,-1);
+        updateScreen(numberB);
+        return;
+    } else if (numberA && !numberB) {
+        numberA = numberA.slice(0,-1);
+        updateScreen(numberA);
+        return;
+    }
+}
+
+function updateScreen(value, isOperand) {
+    calculatorScreen.textContent = value;
+}
 
 
 
