@@ -1,6 +1,7 @@
 let numberA = '';
 let numberB = '';
 let operation = '';
+let result = '';
 let calculatorScreen = document.querySelector('#screen');
 const calculatorDiv = document.querySelector('#calculator');
 calculatorDiv.addEventListener('click', calculatorInteraction);
@@ -49,8 +50,29 @@ function calculatorInteraction(event) {
     } else if (buttonClicked.id === "=") {
 
         if (numberA && numberB && operation) {
-            let result = operate(+numberA, +numberB, operation);
+            result = operate(+numberA, +numberB, operation);
             calculatorScreen.textContent = result;
+        }
+
+    } else if (buttonClicked.id === "clear") {
+
+        numberA = '';
+        numberB = '';
+        operation = '';
+        result = '';
+        calculatorScreen.textContent = '';
+
+    } else if (buttonClicked.id === "backspace") {
+
+        if (result) return;
+        if (numberB) {
+            numberB = numberB.slice(0,-1);
+            calculatorScreen.textContent = numberB;
+            return;
+        } else if (numberA && !numberB) {
+            numberA = numberA.slice(0,-1);
+            calculatorScreen.textContent = numberA;
+            return;
         }
 
     }
