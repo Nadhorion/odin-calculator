@@ -43,7 +43,7 @@ function calculatorInteraction(event) {
         operatorClicked(buttonClicked);
     } else if (buttonClicked.id === "=") {
         result = evaluate();
-        if (result) updateScreen(result);
+        if (!(result === '')) updateScreen(result);
     } else if (buttonClicked.id === "clear") {
         clear();
     } else if (buttonClicked.id === "backspace") {
@@ -52,7 +52,8 @@ function calculatorInteraction(event) {
 }
 
 function numberClicked(buttonClicked) {
-    if (result) clear();
+    if (!(result === '')) clear();
+    //If there is no operator saved (clicked), we are still on numberA, else: numberB.
     if (!operation) {
         numberA += buttonClicked.id;
         updateScreen(numberA);
