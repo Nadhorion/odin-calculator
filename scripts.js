@@ -9,7 +9,13 @@ calculatorDiv.addEventListener('click', calculatorInteraction);
 function addition(a, b) { return a + b; }
 function subtraction(a, b) { return a - b; }
 function multiplication(a, b) { return a * b; }
-function division(a, b) {return a / b; }
+function division(a, b) {
+    if (b === 0) {
+        alert("Are ya tryna kill me!?...Impossible.");
+        return "Division by 0 :("
+    };
+    return a / b; 
+}
 
 function operate(a, b, operator) {
 
@@ -33,6 +39,8 @@ function calculatorInteraction(event) {
 
     if (buttonClicked.className === "number") {
         numberClicked(buttonClicked);
+    } else if (buttonClicked.id === "decimal") {
+        decimalClicked();
     } else if (buttonClicked.className === "operator") {
         operatorClicked(buttonClicked);
     } else if (buttonClicked.id === "=") {
@@ -53,8 +61,29 @@ function numberClicked(buttonClicked) {
     } else if (operation) {
         numberB += buttonClicked.id;
         updateScreen(numberB);
-    }
+    } 
+}
+
+function decimalClicked() {
     
+
+    if (!operation) {
+        if (numberA.includes(".")) return;
+        if (!numberA) {
+            numberA += "0.";
+        } else {
+            numberA += ".";
+        }
+        updateScreen(numberA);
+    } else if (operation) {
+        if (numberB.includes(".")) return;
+        if (!numberB) {
+            numberB += "0.";
+        } else {
+            numberB += ".";
+        }
+        updateScreen(numberB);
+    } 
 }
 
 function operatorClicked(buttonClicked) {
