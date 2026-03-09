@@ -58,6 +58,7 @@ function numberClicked(buttonClicked) {
         numberA += buttonClicked.id;
         updateScreen(numberA);
     } else if (operation) {
+
         numberB += buttonClicked.id;
         updateScreen(numberB);
     } 
@@ -69,13 +70,14 @@ function decimalClicked() {
         if (numberA.includes(".")) return;
         numberA += (!isReal(numberA)) ? "0." : ".";
         updateScreen(numberA);
+
     } else if (operation) {
         if (numberB.includes(".")) return;
         numberB += (!isReal(numberB)) ? "0." : ".";
         updateScreen(numberB);
     } 
 }
-// Add property that returns whether numberA or NumberB have a saved number or not. number = "0" is causing issues as it returns falsy. Replace conditions with it
+
 function operatorClicked(buttonClicked) {
     if (isReal(result)) clear();
     if (isReal(numberA) && !isReal(numberB)) {
@@ -111,10 +113,12 @@ function backspace() {
     if (isReal(result)) return;
     if (isReal(numberB)) {
         numberB = numberB.slice(0,-1);
+        if (!isReal(numberB)) numberB = '0';
         updateScreen(numberB);
         return;
     } else if (isReal(numberA) && !isReal(numberB)) {
         numberA = numberA.slice(0,-1);
+        if (!isReal(numberA)) numberA = '0';
         updateScreen(numberA);
         return;
     }
