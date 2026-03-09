@@ -4,7 +4,8 @@ let operation = '';
 let result = '';
 let calculatorScreen = document.querySelector('#screen');
 const calculatorDiv = document.querySelector('#calculator');
-calculatorDiv.addEventListener('click', calculatorInteraction);
+calculatorDiv.addEventListener('click', calculatorClickInteraction);
+document.addEventListener('keydown', calculatorKeyboardInteraction);
 
 function addition(a, b) { return a + b; }
 function subtraction(a, b) { return a - b; }
@@ -33,7 +34,7 @@ function operate(a, b, operator) {
     }
 }
 
-function calculatorInteraction(event) {
+function calculatorClickInteraction(event) {
     let buttonClicked = event.target;
     if (buttonClicked.className === "number") {
         numberClicked(buttonClicked);
@@ -51,15 +52,54 @@ function calculatorInteraction(event) {
     }
 }
 
+function calculatorKeyboardInteraction(event) {
+    const keyPressed = event.key;
+
+    // Used to convert a pressed key into an object that 
+    // can easily be passed into calculatorClickInteraction() 
+    // for handling.
+    const keyConvertedObject = {target: 
+        {
+            className: '',
+            id: '',
+        }
+    };
+    const keyConverted = keyConvertedObject.target;
+    const numberKeys = Array.from('0123456789');
+    const operatorKeys = Array.from('+-*/');
+    const equalsKey = '=';
+    const decimalKey = '.';
+    const backspaceKey = 'Backspace';
+    const enterKey = 'Enter';
+
+    if (numberKeys.includes(keyPressed)) {
+        keyConverted.className = 'number';
+        keyConverted.id = keyPressed;
+        calculatorClickInteraction(keyConvertedObject);
+    } else if (operatorKeys.includes(keyPressed)) {
+        keyConverted.className = 'operator';
+        keyConverted.id = keyPressed;
+        calculatorClickInteraction(keyConvertedObject);
+    } else if (decimalKey === keyPressed) {
+        keyConverted.id = keyPressed;
+        calculatorClickInteraction(keyConvertedObject);
+    } else if (backspaceKey === keyPressed) {
+        keyConverted.id = 'backspace';
+        calculatorClickInteraction(keyConvertedObject);
+    } else if (enterKey === keyPressed || equalsKey === keyPressed) {
+        keyConverted.id = '=';
+        calculatorClickInteraction(keyConvertedObject);
+    }
+}
+
 function numberClicked(buttonClicked) {
     if (isReal(result)) clear();
     //If there is no operator saved (clicked), we are still on numberA, else: numberB.
     if (!operation) {
-        numberA += buttonClicked.id;
+        numberA = (numberA !== '0') ? numberA + buttonClicked.id : buttonClicked.id;
         updateScreen(numberA);
     } else if (operation) {
-
-        numberB += buttonClicked.id;
+        numberB = (numberB !== '0') ? numberB + buttonClicked.id : buttonClicked.id;
         updateScreen(numberB);
     } 
 }
@@ -110,7 +150,10 @@ function clear() {
 }
 
 function backspace() {
-    if (isReal(result)) return;
+    if (isReal(result)) {
+        clear()
+        return;
+    }
     if (isReal(numberB)) {
         numberB = numberB.slice(0,-1);
         if (!isReal(numberB)) numberB = '0';
