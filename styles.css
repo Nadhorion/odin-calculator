@@ -1,17 +1,21 @@
 body {
     background-color: rgb(247, 243, 238);
-    
+    font-family: 'Courier New', Courier, monospace;
+    height: 100vh;
+    margin: 0;
+    display: flex;
+    align-items: center;
+
 }
 
 #calculator {
 
     border: solid;
     border-radius: 5px;
-    /* border-bottom-left-radius: 15px;
-    border-bottom-right-radius: 15px; */
     border-color: rgb(255 102 41);
     border-width: 5px;
 
+    margin: auto;
     width: 350px;
     height: 550px;
     display: flex;

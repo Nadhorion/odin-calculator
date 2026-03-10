@@ -44,7 +44,7 @@ function calculatorClickInteraction(event) {
         operatorClicked(buttonClicked);
     } else if (buttonClicked.id === "=") {
         result = evaluate();
-        if (isReal(result)) updateScreen(result);
+        if (isReal(result)) updateScreen(result, true);
     } else if (buttonClicked.id === "clear") {
         clear();
     } else if (buttonClicked.id === "backspace") {
@@ -171,8 +171,9 @@ function isReal(value) {
     return (value === '' || value === undefined) ? false : true;    
 }
 
-function updateScreen(value, isOperand) {
-    calculatorScreen.textContent = value;
+function updateScreen(value, isResult) {
+    let valueForScreen = (isResult) ? Math.floor(value *10000) / 10000 : value;
+    calculatorScreen.textContent = valueForScreen;
 }
 
 
