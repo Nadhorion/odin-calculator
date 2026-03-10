@@ -123,6 +123,8 @@ button {
     border-bottom-right-radius: 16px;
     border-top-left-radius: 8px;
     border-top-right-radius: 8px;
+    background-color: rgb(247 243 238);
+    
     font-size: larger;
     box-shadow: 4px 3px 16px -6px rgba(100,35,0,0.29);
 }
@@ -131,7 +133,8 @@ button {
 #\=, #\+, #\-, #\*, #\/ {
     background-color: rgb(255 102 41);
     color: rgb(247 243 238);
-    border: none;
+    border: solid;
+    border-color: rgb(255 102 41);
 
 }
 
