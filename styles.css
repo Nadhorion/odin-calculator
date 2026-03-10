@@ -35,6 +35,44 @@ body {
 
 #decoration {
     flex: 1;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+#solar-panel {
+    flex: 1;
+    background-color: rgb(47, 70, 63);
+    height: 35px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    border: solid;
+    border-color: rgb(24, 43, 37);
+    border-radius: 5px;
+}
+
+#brand {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    
+}
+
+#brand > h3 {
+    font-size: small;
+    text-align: end;
+    color: rgb(247 243 238);
+}
+
+#brand > img {
+
+    width: 30px;
+    height: 30px;
 }
 
 #screenDiv {
@@ -89,7 +127,7 @@ button {
     box-shadow: 4px 3px 16px -6px rgba(100,35,0,0.29);
 }
 
-/* operators and equals */
+/* operators and equals buttons */
 #\=, #\+, #\-, #\*, #\/ {
     background-color: rgb(255 102 41);
     color: rgb(247 243 238);
@@ -97,7 +135,7 @@ button {
 
 }
 
-/* equals sign button */
+/* equals sign and backspace button */
 #\=,
 #backspace
 {
